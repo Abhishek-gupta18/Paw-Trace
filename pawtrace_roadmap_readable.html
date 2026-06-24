@@ -1,0 +1,738 @@
+<h2 class="sr-only">PawTrace development roadmap — frontend and backend tracks with file directory layout</h2>
+<style>
+* { box-sizing: border-box; }
+
+/* Tab navigation */
+.tab-row {
+  display: flex;
+  margin-bottom: 1.75rem;
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+}
+.tab {
+  flex: 1;
+  padding: 10px 0;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  transition: background .15s, color .15s;
+  letter-spacing: 0.01em;
+}
+.tab.active {
+  background: var(--color-background-secondary);
+  color: var(--color-text-primary);
+}
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* Legend */
+.legend-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-md);
+  background: var(--color-background-secondary);
+}
+.leg {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+/* Track containers */
+.track {
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+.track-header {
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.track-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1.4;
+}
+.track-sub {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+
+/* Day rows */
+.day-row {
+  display: grid;
+  grid-template-columns: 82px 1fr;
+  border-top: 1px solid var(--color-border-tertiary);
+}
+.day-cell {
+  padding: 14px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  border-right: 1px solid var(--color-border-tertiary);
+  display: flex;
+  align-items: flex-start;
+  padding-top: 16px;
+  line-height: 1.4;
+}
+.tasks-cell {
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+/* Individual tasks */
+.task {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  line-height: 1.6;
+}
+.task-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+.file-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 1px;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+/* Deliverable badges */
+.deliv {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: var(--border-radius-md);
+  margin-top: 6px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* File structure tab */
+.section-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  letter-spacing: .06em;
+  margin: 1.75rem 0 .85rem;
+  text-transform: uppercase;
+}
+.dir-block {
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  padding: 18px 20px;
+  margin-bottom: 1.25rem;
+  font-size: 13px;
+  font-family: var(--font-mono);
+  line-height: 2.1;
+  color: var(--color-text-primary);
+  overflow-x: auto;
+}
+.dir-folder { color: var(--color-text-info); font-weight: 600; }
+.dir-file   { color: var(--color-text-secondary); }
+.dir-comment{ color: var(--color-text-tertiary); }
+</style>
+
+<div style="padding:1rem 0">
+  <div class="tab-row">
+    <button class="tab active" onclick="showTab('roadmap')">Roadmap</button>
+    <button class="tab" onclick="showTab('dirs')">File structure</button>
+  </div>
+
+  <div id="roadmap" class="panel active">
+    <div class="legend-row">
+      <div class="leg"><span class="task-dot" style="background:#378ADD"></span>Setup / config</div>
+      <div class="leg"><span class="task-dot" style="background:#1D9E75"></span>Core feature</div>
+      <div class="leg"><span class="task-dot" style="background:#BA7517"></span>AI / realtime</div>
+      <div class="leg"><span class="task-dot" style="background:#639922"></span>Polish / docs</div>
+    </div>
+
+    <!-- FRONTEND TRACK -->
+    <div class="track">
+      <div class="track-header" style="background:var(--color-background-info)">
+        <i class="ti ti-layout-2" style="font-size:18px;color:var(--color-text-info)" aria-hidden="true"></i>
+        <div>
+          <div class="track-label">Frontend — React + Vite + Tailwind + Leaflet.js</div>
+          <div class="track-sub">Owner: You / your teammate</div>
+        </div>
+      </div>
+
+      <div class="day-row">
+        <div class="day-cell">Day 1–2</div>
+        <div class="tasks-cell">
+          <div class="task"><span class="task-dot" style="background:#378ADD"></span>Vite + React 18 project init, Tailwind CSS config, ESLint setup</div>
+          <div class="task"><span class="task-dot" style="background:#378ADD"></span>Folder structure scaffold — pages/, components/, hooks/, utils/</div>
+          <div class="task"><span class="task-dot" style="background:#378ADD"></span>React Router v6 routes setup (/, /report, /match/:id, /relay, /profile)</div>
+          <div class="task"><span class="task-dot" style="background:#378ADD"></span>Axios instance with JWT interceptor + refresh token logic</div>
+          <div class="task"><span class="task-dot" style="background:#378ADD"></span>Login / Register pages with form validation</div>
+          <div class="deliv" style="background:var(--color-background-info);color:var(--color-text-info)"><i class="ti ti-check" style="font-size:12px" aria-hidden="true"></i>Auth UI working</div>
+        </div>
+      </div>
+
+      <div class="day-row">
+        <div class="day-cell">Day 3–4</div>
+        <div class="tasks-cell">
+          <div class="task"><span class="task-dot" style="background:#1D9E75"></span>Leaflet.js map page — full-viewport map, geolocation, OpenStreetMap tiles</div>
+          <div class="task"><span class="task-dot" style="background:#1D9E75"></span>Custom cat pin icons — red (lost), green (found), cluster markers</div>
+          <div class="task"><span class="task-dot" style="background:#1D9E75"></span>Pin popup — photo thumbnail, cat name, description, "View full report" link</div>
+          <div class="task"><span class="task-dot" style="background:#1D9E75"></span>Floating filter bar — Lost / Found toggle, date filter, radius slider</div>
+          <div class="task"><span class="task-dot" style="background:#1D9E75"></span>FAB button → navigate to /report</div>
+          <div class="deliv" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:12px" aria-hidden="true"></i>Map renders pins</div>
+        </div>
+      </div>
+
+      <div class="day-row">
+        <div class="day-cell">Day 5–6</div>
+        <div class="tasks-cell">
+          <div class="task"><span class="task-dot" style="background:#1D9E75"></span>Report form page — type toggle, photo upload preview, description, location picker</div>
+          <div class="task"><span class="task-dot" style="background:#1D9E75"></span>Report detail page — full photo, contact button, status badge, "Trigger Relay" button</div>
+          <div class="task"><span class="task-dot" style="background:#1D9E75"></span>Toast notifications for nearby alerts</div>
+          <div class="task"><span class="task-dot" style="background:#1D9E75"></span>Skeleton loading states for map + cards</div>
+          <div class="deliv" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:12px" aria-hidden="true"></i>Report CRUD UI done</div>
+        </div>
+      </div>
+
+      <div class="day-row">
+        <div class="day-cell">Day 7–8</div>
+        <div class="tasks-cell">
+          <div class="task"><span class="task-dot" style="background:#BA7517"></span>Match results page — side-by-side photo comparison component</div>
+          <div class="task"><span class="task-dot" style="background:#BA7517"></span>Confidence score bar (animated fill, color-coded by score)</div>
+          <div class="task"><span class="task-dot" style="background:#BA7517"></span>Feature diff list — fur color, pattern, markings comparison</div>
+          <div class="task"><span class="task-dot" style="background:#BA7517"></span>"This is my cat!" / "Not my cat" action buttons</div>
+          <div class="deliv" style="background:var(--color-background-warning);color:var(--color-text-warning)"><i class="ti ti-check" style="font-size:12px" aria-hidden="true"></i>Match UI complete</div>
+        </div>
+      </div>
+
+      <div class="day-row">
+        <div class="day-cell">Day 9–10</div>
+        <div class="tasks-cell">
+          <div class="task"><span class="task-dot" style="background:#BA7517"></span>Socket.io client setup — connect on login, subscribe to user's relay room</div>
+          <div class="task"><span class="task-dot" style="background:#BA7517"></span>Relay dashboard page — active relay events list, status chain timeline</div>
+          <div class="task"><span class="task-dot" style="background:#BA7517"></span>Accept / Decline buttons + real-time status update display</div>
+          <div class="task"><span class="task-dot" style="background:#BA7517"></span>Live relay ping toast (volunteer gets a popup when a cat is spotted nearby)</div>
+          <div class="deliv" style="background:var(--color-background-warning);color:var(--color-text-warning)"><i class="ti ti-check" style="font-size:12px" aria-hidden="true"></i>Relay UI working</div>
+        </div>
+      </div>
+
+      <div class="day-row">
+        <div class="day-cell">Day 11–12</div>
+        <div class="tasks-cell">
+          <div class="task"><span class="task-dot" style="background:#1D9E75"></span>Volunteer profile section — toggle volunteer mode, radius, foster toggle</div>
+          <div class="task"><span class="task-dot" style="background:#1D9E75"></span>User profile page — past reports, notification radius, edit profile</div>
+          <div class="task"><span class="task-dot" style="background:#639922"></span>Mobile responsiveness audit — test at 375px, fix layout breaks</div>
+          <div class="task"><span class="task-dot" style="background:#639922"></span>Dark mode consistency pass</div>
+          <div class="deliv" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:12px" aria-hidden="true"></i>All pages polished</div>
+        </div>
+      </div>
+
+      <div class="day-row">
+        <div class="day-cell">Day 13–14</div>
+        <div class="tasks-cell">
+          <div class="task"><span class="task-dot" style="background:#639922"></span>Error boundary components — 404, API error states</div>
+          <div class="task"><span class="task-dot" style="background:#639922"></span>Vercel / Netlify deployment + env vars config</div>
+          <div class="task"><span class="task-dot" style="background:#639922"></span>Final cross-browser test, submission screenshots</div>
+          <div class="deliv" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:12px" aria-hidden="true"></i>Deployed & submitted</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BACKEND TRACK -->
+    <div class="track">
+      <div class="track-header" style="background:var(--color-background-secondary)">
+        <i class="ti ti-server" style="font-size:18px;color:var(--color-text-secondary)" aria-hidden="true"></i>
+        <div>
+          <div class="track-label">Backend — Node.js + Express + PostgreSQL + Prisma</div>
+          <div class="track-sub">Owner: You / your teammate</div>
+        </div>
+      </div>
+
+      <div class="day-row">
+        <div class="day-cell">Day 1–2</div>
+        <div class="tasks-cell">
+          <div class="task"><span class="task-dot" style="background:#378ADD"></span>Node.js + Express project init — folder structure, ESLint, nodemon</div>
+          <div class="task"><span class="task-dot" style="background:#378ADD"></span>PostgreSQL + Prisma setup — schema.prisma with all 5 tables, first migration</div>
+          <div class="task"><span class="task-dot" style="background:#378ADD"></span>.env config — DATABASE_URL, JWT_SECRET, ANTHROPIC_KEY, CLOUDINARY creds</div>
+          <div class="task"><span class="task-dot" style="background:#378ADD"></span>Auth routes — POST /register, POST /login, POST /refresh, GET /me</div>
+          <div class="task"><span class="task-dot" style="background:#378ADD"></span>bcrypt password hashing, JWT signing, httpOnly cookie setup</div>
+          <div class="task"><span class="task-dot" style="background:#378ADD"></span>authMiddleware.js — validate JWT on protected routes</div>
+          <div class="deliv" style="background:var(--color-background-info);color:var(--color-text-info)"><i class="ti ti-check" style="font-size:12px" aria-hidden="true"></i>Auth API + DB ready</div>
+        </div>
+      </div>
+
+      <div class="day-row">
+        <div class="day-cell">Day 3–4</div>
+        <div class="tasks-cell">
+          <div class="task"><span class="task-dot" style="background:#1D9E75"></span>Multer + Cloudinary upload middleware for cat photos</div>
+          <div class="task"><span class="task-dot" style="background:#1D9E75"></span>Reports CRUD — POST /reports, GET /reports, GET /reports/:id, PUT, DELETE</div>
+          <div class="task"><span class="task-dot" style="background:#1D9E75"></span>Geospatial nearby query — filter reports within N km using lat/lng math (Haversine)</div>
+          <div class="task"><span class="task-dot" style="background:#1D9E75"></span>Nearby alert system — on new report, query users within radius, push Socket.io event</div>
+          <div class="task"><span class="task-dot" style="background:#1D9E75"></span>express-validator input sanitization on all body params</div>
+          <div class="deliv" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:12px" aria-hidden="true"></i>Reports API + alerts</div>
+        </div>
+      </div>
+
+      <div class="day-row">
+        <div class="day-cell">Day 5–6</div>
+        <div class="tasks-cell">
+          <div class="task"><span class="task-dot" style="background:#BA7517"></span>Claude Vision API integration — matchService.js sends photo as base64 to /v1/messages</div>
+          <div class="task"><span class="task-dot" style="background:#BA7517"></span>Feature extraction prompt — structured JSON output (fur color, pattern, markings, breed, size)</div>
+          <div class="task"><span class="task-dot" style="background:#BA7517"></span>Store ai_features as JSONB in reports table</div>
+          <div class="task"><span class="task-dot" style="background:#BA7517"></span>Match scoring algorithm — compare feature overlap, compute confidence 0–100</div>
+          <div class="task"><span class="task-dot" style="background:#BA7517"></span>POST /reports triggers matchService async after save (non-blocking)</div>
+          <div class="deliv" style="background:var(--color-background-warning);color:var(--color-text-warning)"><i class="ti ti-check" style="font-size:12px" aria-hidden="true"></i>AI matching live</div>
+        </div>
+      </div>
+
+      <div class="day-row">
+        <div class="day-cell">Day 7–8</div>
+        <div class="tasks-cell">
+          <div class="task"><span class="task-dot" style="background:#BA7517"></span>Matches routes — GET /matches/:reportId, PUT /matches/:id/dismiss</div>
+          <div class="task"><span class="task-dot" style="background:#BA7517"></span>Email notification (Nodemailer / Resend) on high confidence match (≥75%)</div>
+          <div class="task"><span class="task-dot" style="background:#BA7517"></span>Socket.io server setup — rooms per user, relay event namespacing</div>
+          <div class="task"><span class="task-dot" style="background:#BA7517"></span>Volunteer routes — POST /volunteer/register, PUT /volunteer/toggle</div>
+          <div class="deliv" style="background:var(--color-background-warning);color:var(--color-text-warning)"><i class="ti ti-check" style="font-size:12px" aria-hidden="true"></i>Matches + Socket.io</div>
+        </div>
+      </div>
+
+      <div class="day-row">
+        <div class="day-cell">Day 9–10</div>
+        <div class="tasks-cell">
+          <div class="task"><span class="task-dot" style="background:#BA7517"></span>Relay routes — POST /relay (trigger), PUT /relay/:id/respond, PUT /relay/:id/status</div>
+          <div class="task"><span class="task-dot" style="background:#BA7517"></span>On relay trigger — query active volunteers within 3km, emit Socket.io ping to each</div>
+          <div class="task"><span class="task-dot" style="background:#BA7517"></span>Relay status chain transitions validated server-side (Pending→Accepted→Caught→…)</div>
+          <div class="task"><span class="task-dot" style="background:#BA7517"></span>On status update — emit event to reporter's socket room for real-time UI update</div>
+          <div class="deliv" style="background:var(--color-background-warning);color:var(--color-text-warning)"><i class="ti ti-check" style="font-size:12px" aria-hidden="true"></i>Relay fully working</div>
+        </div>
+      </div>
+
+      <div class="day-row">
+        <div class="day-cell">Day 11–12</div>
+        <div class="tasks-cell">
+          <div class="task"><span class="task-dot" style="background:#378ADD"></span>express-rate-limit on /auth/* (5 req / 15 min per IP)</div>
+          <div class="task"><span class="task-dot" style="background:#378ADD"></span>CORS config — restrict to frontend origin only</div>
+          <div class="task"><span class="task-dot" style="background:#378ADD"></span>Helmet.js security headers</div>
+          <div class="task"><span class="task-dot" style="background:#378ADD"></span>Global error handler middleware, 404 route catch</div>
+          <div class="task"><span class="task-dot" style="background:#378ADD"></span>File type + size validation on uploads (jpg/png/webp, max 5MB)</div>
+          <div class="deliv" style="background:var(--color-background-info);color:var(--color-text-info)"><i class="ti ti-check" style="font-size:12px" aria-hidden="true"></i>Security hardened</div>
+        </div>
+      </div>
+
+      <div class="day-row">
+        <div class="day-cell">Day 13–14</div>
+        <div class="tasks-cell">
+          <div class="task"><span class="task-dot" style="background:#639922"></span>Railway / Render deployment, environment variable setup</div>
+          <div class="task"><span class="task-dot" style="background:#639922"></span>Prisma migration on prod DB</div>
+          <div class="task"><span class="task-dot" style="background:#639922"></span>README — setup guide, .env.example, API endpoint docs</div>
+          <div class="task"><span class="task-dot" style="background:#639922"></span>Smoke test all endpoints on prod</div>
+          <div class="deliv" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:12px" aria-hidden="true"></i>Deployed & submitted</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILE STRUCTURE TAB -->
+  <div id="dirs" class="panel">
+    <style>
+      .tree-explorer {
+        border: 1px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-lg);
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+        font-family: var(--font-mono);
+        font-size: 13px;
+      }
+      .tree-explorer-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        background: var(--color-background-secondary);
+        border-bottom: 1px solid var(--color-border-tertiary);
+        font-family: var(--font-sans, sans-serif);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+        color: var(--color-text-secondary);
+      }
+      .tree-explorer-body {
+        padding: 8px 0;
+        line-height: 1;
+      }
+      .tree-row {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        padding: 0 10px;
+        height: 26px;
+        cursor: default;
+        user-select: none;
+        position: relative;
+      }
+      .tree-row:hover {
+        background: var(--color-background-secondary);
+      }
+      .tree-row.folder-row {
+        cursor: pointer;
+      }
+      /* Indent guides */
+      .tree-indent {
+        display: inline-flex;
+        align-items: center;
+        width: 18px;
+        flex-shrink: 0;
+        position: relative;
+        height: 26px;
+      }
+      .tree-indent::before {
+        content: '';
+        position: absolute;
+        left: 8px;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: var(--color-border-tertiary);
+      }
+      /* Chevron toggle */
+      .tree-chevron {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        margin-right: 2px;
+        color: var(--color-text-tertiary);
+        transition: transform .15s;
+      }
+      .tree-chevron svg { width: 10px; height: 10px; }
+      .tree-chevron.open { transform: rotate(90deg); }
+      .tree-chevron.leaf { opacity: 0; pointer-events: none; }
+      /* Icons */
+      .tree-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        margin-right: 6px;
+        font-style: normal;
+      }
+      /* Name + comment */
+      .tree-name {
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 13px;
+      }
+      .tree-name.is-folder {
+        color: var(--color-text-info);
+        font-weight: 500;
+      }
+      .tree-name.is-jsx  { color: #61AFEF; }
+      .tree-name.is-js   { color: #E5C07B; }
+      .tree-name.is-css  { color: #C678DD; }
+      .tree-name.is-html { color: #E06C75; }
+      .tree-name.is-env  { color: #98C379; }
+      .tree-name.is-conf { color: #ABB2BF; }
+      .tree-name.is-prisma { color: #56B6C2; }
+      .tree-name.is-md   { color: #ABB2BF; }
+      .tree-comment {
+        font-size: 11.5px;
+        color: var(--color-text-tertiary);
+        margin-left: 12px;
+        white-space: nowrap;
+        flex-shrink: 0;
+        font-style: italic;
+      }
+      /* Children container */
+      .tree-children {
+        display: block;
+      }
+      .tree-children.collapsed {
+        display: none;
+      }
+    </style>
+
+    <!-- Root overview strip -->
+    <div style="display:flex;gap:10px;margin-bottom:1.25rem;flex-wrap:wrap">
+      <div style="flex:1;min-width:180px;border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:12px 16px;display:flex;align-items:center;gap:10px">
+        <span style="font-size:20px">📁</span>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--color-text-primary)">pawtrace/</div>
+          <div style="font-size:11px;color:var(--color-text-secondary);margin-top:2px">Monorepo root</div>
+        </div>
+      </div>
+      <div style="flex:1;min-width:180px;border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:12px 16px;display:flex;align-items:center;gap:10px;background:var(--color-background-info)">
+        <span style="font-size:20px">⚛️</span>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--color-text-primary)">client/</div>
+          <div style="font-size:11px;color:var(--color-text-secondary);margin-top:2px">React + Vite + Tailwind</div>
+        </div>
+      </div>
+      <div style="flex:1;min-width:180px;border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:12px 16px;display:flex;align-items:center;gap:10px;background:var(--color-background-secondary)">
+        <span style="font-size:20px">🖥️</span>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--color-text-primary)">server/</div>
+          <div style="font-size:11px;color:var(--color-text-secondary);margin-top:2px">Node + Express + Prisma</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FRONTEND TREE -->
+    <div class="tree-explorer">
+      <div class="tree-explorer-header">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="10" rx="1.5" fill="var(--color-text-info)" opacity=".25"/><path d="M1 6.5h14M6 4V2.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5V4" stroke="var(--color-text-info)" stroke-width="1.2" stroke-linecap="round"/></svg>
+        Frontend — client/
+      </div>
+      <div class="tree-explorer-body" id="tree-client"></div>
+    </div>
+
+    <!-- BACKEND TREE -->
+    <div class="tree-explorer">
+      <div class="tree-explorer-header">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="4" rx="1" fill="var(--color-text-secondary)" opacity=".3"/><rect x="1" y="8" width="14" height="4" rx="1" fill="var(--color-text-secondary)" opacity=".3"/><circle cx="12.5" cy="4" r="1" fill="var(--color-text-secondary)"/><circle cx="12.5" cy="10" r="1" fill="var(--color-text-secondary)"/></svg>
+        Backend — server/
+      </div>
+      <div class="tree-explorer-body" id="tree-server"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ── Tree builder ────────────────────────────────────────────────
+const CHEVRON = `<svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 2l4 3-4 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+function fileClass(name) {
+  if (name.endsWith('.jsx'))    return 'is-jsx';
+  if (name.endsWith('.js'))     return 'is-js';
+  if (name.endsWith('.css'))    return 'is-css';
+  if (name.endsWith('.html'))   return 'is-html';
+  if (name.endsWith('.prisma')) return 'is-prisma';
+  if (name.endsWith('.md'))     return 'is-md';
+  if (name.startsWith('.env'))  return 'is-env';
+  if (name.endsWith('.json') || name.endsWith('.config.js') || name.endsWith('vite.config.js') || name.endsWith('tailwind.config.js')) return 'is-conf';
+  return 'is-conf';
+}
+
+function fileIcon(name, isFolder) {
+  if (isFolder) return '📂';
+  if (name.endsWith('.jsx') || name.endsWith('.tsx')) return '⚛';
+  if (name.endsWith('.js') || name.endsWith('.ts'))   return '𝙅';
+  if (name.endsWith('.css'))    return '🎨';
+  if (name.endsWith('.html'))   return '🌐';
+  if (name.endsWith('.prisma')) return '▲';
+  if (name.endsWith('.md'))     return '📝';
+  if (name.startsWith('.env'))  return '🔑';
+  if (name.endsWith('.json'))   return '{}';
+  return '📄';
+}
+
+function buildTree(container, nodes, depth) {
+  nodes.forEach(node => {
+    const isFolder = !!node.children;
+    const row = document.createElement('div');
+    row.className = 'tree-row' + (isFolder ? ' folder-row' : '');
+
+    // Indent guides
+    for (let i = 0; i < depth; i++) {
+      const ind = document.createElement('span');
+      ind.className = 'tree-indent';
+      row.appendChild(ind);
+    }
+
+    // Chevron
+    const chev = document.createElement('span');
+    chev.className = 'tree-chevron' + (isFolder ? ' open' : ' leaf');
+    chev.innerHTML = CHEVRON;
+    row.appendChild(chev);
+
+    // Icon
+    const icon = document.createElement('span');
+    icon.className = 'tree-icon';
+    icon.textContent = fileIcon(node.name, isFolder);
+    icon.style.fontSize = isFolder ? '13px' : '11px';
+    row.appendChild(icon);
+
+    // Name
+    const name = document.createElement('span');
+    name.className = 'tree-name ' + (isFolder ? 'is-folder' : fileClass(node.name));
+    name.textContent = node.name;
+    row.appendChild(name);
+
+    // Comment
+    if (node.comment) {
+      const cmt = document.createElement('span');
+      cmt.className = 'tree-comment';
+      cmt.textContent = '// ' + node.comment;
+      row.appendChild(cmt);
+    }
+
+    container.appendChild(row);
+
+    if (isFolder) {
+      const childWrap = document.createElement('div');
+      childWrap.className = 'tree-children';
+      container.appendChild(childWrap);
+      buildTree(childWrap, node.children, depth + 1);
+
+      row.addEventListener('click', () => {
+        const open = !childWrap.classList.contains('collapsed');
+        childWrap.classList.toggle('collapsed', open);
+        chev.classList.toggle('open', !open);
+        icon.textContent = open ? '📁' : '📂';
+      });
+    }
+  });
+}
+
+const clientTree = [
+  { name: 'src/', children: [
+    { name: 'pages/', children: [
+      { name: 'MapPage.jsx',        comment: 'main map, all pins' },
+      { name: 'ReportPage.jsx',     comment: 'create lost/found report' },
+      { name: 'ReportDetail.jsx',   comment: 'single report view' },
+      { name: 'MatchPage.jsx',      comment: 'AI match results' },
+      { name: 'RelayDashboard.jsx', comment: 'volunteer relay events' },
+      { name: 'ProfilePage.jsx',    comment: 'user + volunteer settings' },
+      { name: 'LoginPage.jsx' },
+      { name: 'RegisterPage.jsx' },
+    ]},
+    { name: 'components/', children: [
+      { name: 'map/', children: [
+        { name: 'CatPin.jsx',    comment: 'custom leaflet marker' },
+        { name: 'PinPopup.jsx',  comment: 'popup card on click' },
+        { name: 'FilterBar.jsx', comment: 'lost/found/radius filter' },
+      ]},
+      { name: 'report/', children: [
+        { name: 'PhotoUpload.jsx',    comment: 'drag+drop with preview' },
+        { name: 'LocationPicker.jsx', comment: 'mini map for lat/lng pick' },
+        { name: 'ReportCard.jsx',     comment: 'report summary card' },
+      ]},
+      { name: 'match/', children: [
+        { name: 'MatchCard.jsx',     comment: 'side-by-side photos' },
+        { name: 'ConfidenceBar.jsx', comment: 'animated score bar' },
+      ]},
+      { name: 'relay/', children: [
+        { name: 'RelayCard.jsx',      comment: 'single relay event' },
+        { name: 'StatusTimeline.jsx', comment: 'chain: spotted→caught' },
+      ]},
+      { name: 'ui/', children: [
+        { name: 'Navbar.jsx' },
+        { name: 'Toast.jsx',       comment: 'alert/relay notifications' },
+        { name: 'Skeleton.jsx',    comment: 'loading states' },
+        { name: 'StatusBadge.jsx', comment: 'active/reunited/closed' },
+      ]},
+    ]},
+    { name: 'hooks/', children: [
+      { name: 'useAuth.js',        comment: 'auth context + JWT' },
+      { name: 'useSocket.js',      comment: 'socket.io connection' },
+      { name: 'useGeolocation.js', comment: 'browser location' },
+      { name: 'useReports.js',     comment: 'report fetching/cache' },
+    ]},
+    { name: 'utils/', children: [
+      { name: 'api.js',       comment: 'axios instance + interceptors' },
+      { name: 'haversine.js', comment: 'distance calc utility' },
+    ]},
+    { name: 'context/', children: [
+      { name: 'AuthContext.jsx' },
+    ]},
+    { name: 'App.jsx' },
+    { name: 'main.jsx' },
+    { name: 'index.css' },
+  ]},
+  { name: 'index.html' },
+  { name: 'vite.config.js' },
+  { name: 'tailwind.config.js' },
+];
+
+const serverTree = [
+  { name: 'prisma/', children: [
+    { name: 'schema.prisma', comment: 'all 5 table definitions' },
+    { name: 'migrations/',   comment: 'auto-generated by prisma', children: [] },
+  ]},
+  { name: 'src/', children: [
+    { name: 'routes/', children: [
+      { name: 'auth.routes.js',      comment: '/register /login /refresh /me' },
+      { name: 'report.routes.js',    comment: 'CRUD + /nearby' },
+      { name: 'match.routes.js',     comment: 'GET matches, dismiss' },
+      { name: 'relay.routes.js',     comment: 'trigger, respond, status' },
+      { name: 'volunteer.routes.js', comment: 'register, toggle' },
+    ]},
+    { name: 'controllers/', children: [
+      { name: 'auth.controller.js' },
+      { name: 'report.controller.js' },
+      { name: 'match.controller.js' },
+      { name: 'relay.controller.js' },
+      { name: 'volunteer.controller.js' },
+    ]},
+    { name: 'services/', children: [
+      { name: 'matchService.js',  comment: 'Claude API call + scoring' },
+      { name: 'notifyService.js', comment: 'email on high-conf match' },
+      { name: 'relayService.js',  comment: 'find nearby volunteers' },
+      { name: 'uploadService.js', comment: 'Cloudinary upload helper' },
+    ]},
+    { name: 'middleware/', children: [
+      { name: 'auth.middleware.js',      comment: 'JWT verify' },
+      { name: 'upload.middleware.js',    comment: 'multer + file type check' },
+      { name: 'validate.middleware.js',  comment: 'express-validator' },
+      { name: 'rateLimit.middleware.js', comment: 'auth endpoint limits' },
+      { name: 'errorHandler.js',         comment: 'global error catch' },
+    ]},
+    { name: 'socket/', children: [
+      { name: 'relaySocket.js', comment: 'socket.io events + rooms' },
+    ]},
+    { name: 'utils/', children: [
+      { name: 'haversine.js',   comment: 'geo distance calculation' },
+      { name: 'jwt.js',         comment: 'sign/verify helpers' },
+      { name: 'claudeVision.js',comment: 'base64 + prompt builder' },
+    ]},
+    { name: 'app.js', comment: 'express setup, routes, helmet, cors' },
+  ]},
+  { name: 'server.js',    comment: 'entry point, http + socket.io' },
+  { name: '.env' },
+  { name: '.env.example' },
+  { name: 'package.json' },
+];
+
+buildTree(document.getElementById('tree-client'), clientTree, 0);
+buildTree(document.getElementById('tree-server'), serverTree, 0);
+</script>
