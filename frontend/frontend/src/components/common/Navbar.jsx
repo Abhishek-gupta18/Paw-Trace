@@ -27,9 +27,9 @@ export default function Navbar() {
         <Link to="/login" className="px-5 py-2 text-sm font-medium text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-full transition-all">
           Login
         </Link>
-        <button className="px-5 py-2 text-sm font-semibold text-white bg-orange-500 hover:bg-orange-600 rounded-full shadow-md hover:shadow-lg hover:shadow-orange-500/20 transition-all">
+        <Link to="/signup" className="px-5 py-2 text-sm font-semibold text-white bg-orange-500 hover:bg-orange-600 rounded-full shadow-md hover:shadow-lg hover:shadow-orange-500/20 transition-all">
           Get Started
-        </button>
+        </Link>
       </div>
     </nav>
   );
