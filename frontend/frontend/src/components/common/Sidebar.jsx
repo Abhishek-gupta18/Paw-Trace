@@ -7,11 +7,12 @@ import {
   MessageCircle,
   Bell,
   BarChart3,
-  Settings
-  
+  Settings,
+  LogOut,
 } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "./Logo"
+import { useAuth } from "./AuthContext";
 
 const menuItems = [
   {
@@ -63,6 +64,14 @@ const menuItems = [
 ];
 
 export default function Sidebar() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  async function handleLogout() {
+    await logout();
+    navigate("/login", { replace: true });
+  }
+
   return (
     <aside className="w-72 bg-white border-r border-orange-100 flex flex-col justify-between min-h-screen">
 
@@ -169,21 +178,30 @@ export default function Sidebar() {
             className="w-12 h-12 rounded-full object-cover"
           />
 
-          <div>
+          <div className="min-w-0 flex-1">
 
             <h4 className="font-semibold text-slate-800">
 
-              Himanshi Gupta
+              {user?.name || "PawTrace User"}
 
             </h4>
 
             <p className="text-sm text-slate-500">
 
-              himanshi@email.com
+              {user?.email || "user@pawtrace.app"}
 
             </p>
 
           </div>
+
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="w-10 h-10 rounded-xl border border-slate-200 flex items-center justify-center text-slate-500 hover:border-orange-300 hover:text-orange-500 transition"
+            title="Log out"
+          >
+            <LogOut size={18} />
+          </button>
 
         </div>
 

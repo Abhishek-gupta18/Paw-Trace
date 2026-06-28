@@ -1,11 +1,70 @@
+import { useEffect, useState } from "react";
 import {
   Search,
   Bell,
   ChevronDown,
   Sun,
+  Moon,
 } from "lucide-react";
+import { useAuth } from "./AuthContext";
 
 export default function Topbar() {
+  const { user } = useAuth();
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === "undefined") {
+      return "light";
+    }
+
+    return localStorage.getItem("pawtrace-theme") || "light";
+  });
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
+
+  function applyTheme(nextTheme) {
+    document.documentElement.dataset.theme = nextTheme;
+    localStorage.setItem("pawtrace-theme", nextTheme);
+    setTheme(nextTheme);
+  }
+
+  function handleThemeChange(event) {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    const buttonRect = event.currentTarget.getBoundingClientRect();
+    const originX = buttonRect.left + buttonRect.width / 2;
+    const originY = buttonRect.top + buttonRect.height / 2;
+
+    if (!document.startViewTransition) {
+      applyTheme(nextTheme);
+      return;
+    }
+
+    const transition = document.startViewTransition(() => {
+      applyTheme(nextTheme);
+    });
+
+    transition.ready.then(() => {
+      const endRadius = Math.hypot(
+        Math.max(originX, window.innerWidth - originX),
+        Math.max(originY, window.innerHeight - originY),
+      );
+
+      document.documentElement.animate(
+        {
+          clipPath: [
+            `circle(0px at ${originX}px ${originY}px)`,
+            `circle(${endRadius}px at ${originX}px ${originY}px)`,
+          ],
+        },
+        {
+          duration: 850,
+          easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+          pseudoElement: "::view-transition-new(root)",
+        },
+      );
+    });
+  }
+
   return (
     <header className="flex items-center justify-between mb-8">
 
@@ -15,7 +74,7 @@ export default function Topbar() {
 
         <h1 className="text-4xl font-bold text-slate-900">
           Welcome back,
-          <span className="text-orange-500"> Himanshi! 👋</span>
+          <span className="text-orange-500"> {user?.name || "there"}! 👋</span>
         </h1>
 
         <p className="text-slate-500 mt-2 text-lg">
@@ -106,6 +165,8 @@ export default function Topbar() {
         {/* Theme */}
 
         <button
+          type="button"
+          onClick={handleThemeChange}
           className="
             w-14
             h-14
@@ -119,9 +180,10 @@ export default function Topbar() {
             hover:border-orange-300
             transition
           "
+          title={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
         >
 
-          <Sun size={20} />
+          {theme === "dark" ? <Moon size={20} /> : <Sun size={20} />}
 
         </button>
 
@@ -152,11 +214,11 @@ export default function Topbar() {
           <div className="text-left">
 
             <h3 className="font-semibold text-slate-800">
-              Himanshi
+              {user?.name || "PawTrace User"}
             </h3>
 
             <p className="text-xs text-slate-500">
-              Admin
+              {user?.role || "User"}
             </p>
 
           </div>

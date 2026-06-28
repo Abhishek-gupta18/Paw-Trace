@@ -1,14 +1,34 @@
 import { useState } from "react";
 import { Eye, EyeOff, Mail, Lock, PawPrint } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../components/common/AuthContext";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const handleLogin = async () =>{
-    navigate("/dashboard");
-  }
+  const location = useLocation();
+  const { login } = useAuth();
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    setError("");
+    setIsSubmitting(true);
+
+    try {
+      const user = await login(email, password);
+      const redirectTo = location.state?.from?.pathname || user.dashboardPath || "/dashboard";
+      navigate(redirectTo, { replace: true });
+    } catch (err) {
+      setError(err.message || "Unable to log in");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
 
   return (
@@ -47,7 +67,7 @@ const Login = () => {
             Login to continue helping cats.
           </p>
 
-          <form className="mt-10 space-y-6">
+          <form className="mt-10 space-y-6" onSubmit={handleLogin}>
 
             {/* Email */}
 
@@ -67,6 +87,9 @@ const Login = () => {
                 <input
                   type="email"
                   placeholder="Enter your email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  required
                   className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 outline-none"
                 />
 
@@ -92,6 +115,9 @@ const Login = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  required
                   className="w-full pl-12 pr-12 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-orange-500 outline-none"
                 />
 
@@ -137,11 +163,18 @@ const Login = () => {
 
             {/* Button */}
 
+            {error && (
+              <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">
+                {error}
+              </p>
+            )}
+
             <button
+              type="submit"
+              disabled={isSubmitting}
               className="w-full py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-semibold transition"
-              onClick={handleLogin}
             >
-              Login
+              {isSubmitting ? "Logging in..." : "Login"}
             </button>
 
           </form>
