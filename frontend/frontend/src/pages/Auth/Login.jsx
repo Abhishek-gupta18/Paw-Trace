@@ -1,9 +1,15 @@
 import { useState } from "react";
 import { Eye, EyeOff, Mail, Lock, PawPrint } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const handleLogin = async () =>{
+    navigate("/dashboard");
+  }
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-100 via-white to-emerald-100 flex items-center justify-center px-4">
@@ -133,6 +139,7 @@ const Login = () => {
 
             <button
               className="w-full py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-semibold transition"
+              onClick={handleLogin}
             >
               Login
             </button>
