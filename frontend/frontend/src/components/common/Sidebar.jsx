@@ -26,6 +26,12 @@ const menuItems = [
     path: "/reports",
   },
   {
+    name: "ReportLostCat",
+    icon: FileText,
+    path: "/reportLostCat"
+
+  },
+  {
     name: "My Cats",
     icon: Cat,
     path: "/my-cats",

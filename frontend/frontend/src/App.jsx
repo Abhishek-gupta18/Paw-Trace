@@ -9,6 +9,7 @@ import Home from './pages/Landing/Home';
 import Dashboard from './pages/Dashboard/Dashboard';
 import { AuthProvider } from './components/common/AuthContext';
 import ProtectedRoute from './components/common/ProtectedRoute';
+import ReportLostCat from './pages/Reports/ReportLostCat';
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
             <Route path="/notifications" element={<Dashboard/>}/>
             <Route path="/analytics" element={<Dashboard/>}/>
             <Route path="/settings" element={<Dashboard/>}/>
+            <Route path="/reportLostCat" element={<ReportLostCat/>}/>
           </Route>
         </Routes>
       </AuthProvider>
