@@ -4,6 +4,7 @@ import {
   MapPin,
   Eye,
 } from "lucide-react";
+import { useNavigate  } from "react-router-dom";
 
 const reports = [
   {
@@ -45,6 +46,7 @@ const reports = [
 ];
 
 export default function RecentReports() {
+  const navigate = useNavigate ();
   return (
     <div className="bg-white rounded-3xl border border-slate-200 shadow-sm h-[500px] flex flex-col">
 
@@ -62,7 +64,8 @@ export default function RecentReports() {
           </p>
         </div>
 
-        <button className="text-orange-500 text-sm font-semibold hover:underline">
+        <button className="text-orange-500 text-sm font-semibold hover:underline" 
+          onClick={() => navigate("/recent-cat-reports")}>
           View All
         </button>
 

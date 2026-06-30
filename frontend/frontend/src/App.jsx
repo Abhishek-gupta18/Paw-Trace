@@ -12,6 +12,8 @@ import ProtectedRoute from './components/common/ProtectedRoute';
 import ReportLostCat from './pages/Reports/ReportLostCat';
 import Volunteers from './pages/Volunteers/Volunteers';
 import Settings from './pages/Settings/Settings';
+import RecentCatReports from './pages/Reports/RecentCatReports';
+import Reports from './pages/Reports/Reports';
 
 
 function App() {
@@ -34,7 +36,7 @@ function App() {
 
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<Dashboard/>}/>
-            <Route path="/reports" element={<Dashboard/>}/>
+          
             <Route path="/my-cats" element={<Dashboard/>}/>
             <Route path="/map" element={<Dashboard/>}/>
             <Route path="/volunteers" element={<Volunteers/>}/>
@@ -43,6 +45,8 @@ function App() {
             <Route path="/analytics" element={<Dashboard/>}/>
             <Route path="/settings" element={<Settings/>}/>
             <Route path="/reportLostCat" element={<ReportLostCat/>}/>
+            <Route path="/recent-cat-reports" element={<RecentCatReports/>}/>
+            <Route path="/reports" element={<Reports/>}/>
           </Route>
         </Routes>
       </AuthProvider>
