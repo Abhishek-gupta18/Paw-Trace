@@ -10,6 +10,8 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import { AuthProvider } from './components/common/AuthContext';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import ReportLostCat from './pages/Reports/ReportLostCat';
+import Volunteers from './pages/Volunteers/Volunteers';
+import Settings from './pages/Settings/Settings';
 
 
 function App() {
@@ -35,11 +37,11 @@ function App() {
             <Route path="/reports" element={<Dashboard/>}/>
             <Route path="/my-cats" element={<Dashboard/>}/>
             <Route path="/map" element={<Dashboard/>}/>
-            <Route path="/volunteers" element={<Dashboard/>}/>
+            <Route path="/volunteers" element={<Volunteers/>}/>
             <Route path="/messages" element={<Dashboard/>}/>
             <Route path="/notifications" element={<Dashboard/>}/>
             <Route path="/analytics" element={<Dashboard/>}/>
-            <Route path="/settings" element={<Dashboard/>}/>
+            <Route path="/settings" element={<Settings/>}/>
             <Route path="/reportLostCat" element={<ReportLostCat/>}/>
           </Route>
         </Routes>

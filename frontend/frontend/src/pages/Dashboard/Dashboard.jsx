@@ -3,7 +3,7 @@ import Topbar from "../../components/common/Topbar";
 import StatsSection from "../../components/common/StatsSection";
 import CommunityMap from "../../components/common/Community";
 import RecentReports from "../../components/common/RecentReports";
-import ReportsOverview from "../../components/common/RecentReports";
+import MyCatsSection from "../../components/common/MyCatsSection";
 import ActivityFeed from "../../components/common/ActivityFeed";
 import VolunteerBanner from "../../components/common/VolunteerBanner";
 
@@ -39,7 +39,7 @@ export default function Dashboard() {
 
           <div className="col-span-8">
 
-            <ReportsOverview />
+            <MyCatsSection />
 
           </div>
 

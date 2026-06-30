@@ -1,7 +1,6 @@
 import {
   LayoutDashboard,
   FileText,
-  Cat,
   MapPinned,
   Users,
   MessageCircle,
@@ -30,11 +29,6 @@ const menuItems = [
     icon: FileText,
     path: "/reportLostCat"
 
-  },
-  {
-    name: "My Cats",
-    icon: Cat,
-    path: "/my-cats",
   },
   {
     name: "Community Map",
@@ -139,12 +133,12 @@ export default function Sidebar() {
 
         <div className="mx-5 mt-8 rounded-3xl bg-gradient-to-br from-orange-50 to-orange-100 p-5 shadow-sm">
 
-          <div className="flex justify-center">
+          <div className="flex justify-center rounded-3xl bg-white/70 px-3 py-4 shadow-sm">
 
             <img
               src="/images/volunteer.png"
               alt="Volunteer"
-              className="h-32 object-contain"
+              className="h-40 w-full object-contain"
             />
 
           </div>
